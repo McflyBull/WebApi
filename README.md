@@ -9,5 +9,7 @@ Actualizar los datos de .env
 
 3:
 Development: npm run dev
+
 Building: npm run build
+
 Production: Set .env to NODE_ENV="production" y despues npm run build && npm run start
