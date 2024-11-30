@@ -62,17 +62,11 @@
   },
   "lint-staged": {
     "*.{js,ts,cjs,mjs,d.cts,d.mts,json,jsonc}": [
-      "biome check --apply --no-errors-on-unmatched"
+      "biome check --apply --no-errors-on-unmatched --files-ignore-unknown=true 'src/migrations/**'"
     ]
   },
   "tsup": {
-    "entry": [
-      "src",
-      "!src/**/__tests__/**",
-      "!src/**/*.test.*"
-    ],
-    "splitting": false,
-    "sourcemap": true,
+    "entry": ["src", "!src/**/__tests__/**", "!src/**/*.test.*"],
     "clean": true
   }
 }
