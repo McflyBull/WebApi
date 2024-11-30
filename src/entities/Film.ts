@@ -1,29 +1,32 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm"
-import { FilmFunction, Customer, Ticket, Seat } from '.'
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Customer, FilmFunction, Seat, Ticket } from ".";
 
 @Entity()
 export class Film {
-    @PrimaryGeneratedColumn()
-    id: number
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    title: string
+  @Column({ type: "varchar" })
+  title: string;
 
-    @Column("text")
-    overview: string
+  @Column({ type: "text" })
+  overview: string;
 
-    @Column()
-    poster_path: string
+  @Column({ type: "varchar" })
+  poster_path: string;
 
-    @Column()
-    release_date: string
+  @Column({ type: "varchar" })
+  release_date: string;
 
-    @Column()
-    vote_average: number
+  @Column({ type: "float" })
+  vote_average: number;
 
-    @Column()
-    vote_count: number
+  @Column({ type: "int" })
+  vote_count: number;
 
-    @OneToMany(() => FilmFunction, (filmFunction: FilmFunction) => filmFunction.film)
-    functions: FilmFunction[]
-} 
+  @OneToMany(
+    () => FilmFunction,
+    (filmFunction: FilmFunction) => filmFunction.film,
+  )
+  functions: FilmFunction[];
+}

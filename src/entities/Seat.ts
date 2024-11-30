@@ -1,26 +1,32 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm"
-import { FilmFunction, Ticket } from '.'
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { FilmFunction, Ticket } from ".";
 
 @Entity()
 export class Seat {
-    @PrimaryGeneratedColumn()
-    seat_id: number
+  @PrimaryGeneratedColumn()
+  seat_id: number;
 
-    @Column()
-    seat_number: string
+  @Column({ type: "varchar" })
+  seat_number: string;
 
-    @Column()
-    row_identifier: string
+  @Column({ type: "varchar" })
+  row_identifier: string;
 
-    @Column()
-    row: number
+  @Column({ type: "int" })
+  row: number;
 
-    @Column()
-    column: number
+  @Column({ type: "int" })
+  column: number;
 
-    @ManyToOne(() => FilmFunction, filmFunction => filmFunction.seats)
-    function: FilmFunction
+  @ManyToOne(
+    () => FilmFunction,
+    (filmFunction) => filmFunction.seats,
+  )
+  function: FilmFunction;
 
-    @OneToMany(() => Ticket, (ticket: Ticket) => ticket.seat)
-    tickets: Ticket[]
-} 
+  @OneToMany(
+    () => Ticket,
+    (ticket: Ticket) => ticket.seat,
+  )
+  tickets: Ticket[];
+}
