@@ -10,7 +10,9 @@ export const UserSchema = z.object({
   id: z.number(),
   name: z.string(),
   email: z.string().email(),
+  password: z.string().min(60).max(60),
   age: z.number(),
+  role: z.enum(["admin", "client"]),
   createdAt: z.date(),
   updatedAt: z.date(),
 });
