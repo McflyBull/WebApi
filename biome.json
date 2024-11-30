@@ -15,11 +15,13 @@
       },
       "style": {
         "noUselessElse": "off",
-        "noNonNullAssertion": "off"
+        "noNonNullAssertion": "off",
+        "noUnusedTemplateLiteral": "off"
       },
       "complexity": {
         "noForEach": "off"
       }
-    }
+    },
+    "ignore": ["src/migrations/**"]
   }
 }
