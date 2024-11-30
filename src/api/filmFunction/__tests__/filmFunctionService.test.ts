@@ -5,6 +5,20 @@ import type { FilmFunctionDTO } from "../filmFunctionModel";
 import { FilmFunctionRepository } from "../filmFunctionRepository";
 import { FilmFunctionService } from "../filmFunctionService";
 
+// Mock AppDataSource
+vi.mock("@/database/data-source", () => ({
+  AppDataSource: {
+    getRepository: vi.fn(() => ({
+      find: vi.fn(),
+      findOne: vi.fn(),
+      create: vi.fn(),
+      save: vi.fn(),
+      update: vi.fn(),
+      delete: vi.fn(),
+    })),
+  },
+}));
+
 describe("FilmFunctionService", () => {
   let service: FilmFunctionService;
   let repository: FilmFunctionRepository;
