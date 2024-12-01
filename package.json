@@ -67,6 +67,7 @@
   },
   "tsup": {
     "entry": ["src", "!src/**/__tests__/**", "!src/**/*.test.*"],
-    "clean": true
+    "clean": true,
+    "tsconfig": "tsconfig.json"
   }
 }

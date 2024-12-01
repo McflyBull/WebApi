@@ -1,11 +1,12 @@
-import { OpenAPIRegistry, OpenApiGeneratorV3 } from "@asteasolutions/zod-to-openapi";
-
 import { filmFunctionRegistry } from "@/api/filmFunction/filmFunctionRouter";
 import { healthCheckRegistry } from "@/api/healthCheck/healthCheckRouter";
+import { ticketRegistry } from "@/api/ticket/ticketRouter";
 import { userRegistry } from "@/api/user/userRouter";
+import { OpenAPIRegistry, OpenApiGeneratorV3 } from "@asteasolutions/zod-to-openapi";
 
-export function generateOpenAPIDocument() {
-  const registry = new OpenAPIRegistry([healthCheckRegistry, userRegistry, filmFunctionRegistry]);
+export const generateOpenAPIDocument = () => {
+  const registry = new OpenAPIRegistry([healthCheckRegistry, userRegistry, filmFunctionRegistry, ticketRegistry]);
+
   const generator = new OpenApiGeneratorV3(registry.definitions);
 
   return generator.generateDocument({
@@ -20,4 +21,4 @@ export function generateOpenAPIDocument() {
       url: "/swagger.json",
     },
   });
-}
+};
