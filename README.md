@@ -5,7 +5,7 @@ API REST desarrollada con Express.js, utilizando TypeScript y TypeORM como ORM.
 ## Requisitos Previos
 
 - Node.js
-- mysql
+- mysql (si estan usando xamp que este arriba el servicio de mysql)
 
 ## Configuración Inicial
 
