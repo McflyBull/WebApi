@@ -1,4 +1,4 @@
-# WebApi
+![image](https://github.com/user-attachments/assets/64bf4113-6427-4eee-a159-578c9b224658)# WebApi
 
 API REST desarrollada con Express.js, utilizando TypeScript y TypeORM como ORM.
 
@@ -6,6 +6,14 @@ API REST desarrollada con Express.js, utilizando TypeScript y TypeORM como ORM.
 
 - Node.js
 - mysql (si estan usando xamp que este arriba el servicio de mysql)
+- Crear base de datos manualmente con los siguientes datos:
+  Nombre: "cinema_db"
+  charset: "utf8mb4"
+  collation: "utf8mb4_general"
+
+  Ejemplo:
+- ![image](https://github.com/user-attachments/assets/f51bab7c-e576-46a3-b971-6ff206a746d8)
+
 
 ## Configuración Inicial
 
