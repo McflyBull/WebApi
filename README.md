@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/64bf4113-6427-4eee-a159-578c9b224658)# WebApi
+# WebApi
 
 API REST desarrollada con Express.js, utilizando TypeScript y TypeORM como ORM.
 
