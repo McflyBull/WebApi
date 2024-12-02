@@ -27,6 +27,27 @@ API REST desarrollada con Express.js, utilizando TypeScript y TypeORM como ORM.
 2. **Configuración del Entorno**
    - Duplicar el archivo `.env.template` y renombrarlo a `.env`
    - Actualizar las variables de entorno en el archivo `.env` con tus configuraciones
+   - Ejemplo:
+     
+   ```bash
+      # Environment Configuration
+      NODE_ENV="development" # Options: 'development', 'production'
+      PORT="8080"            # The port your server will listen on
+      HOST="localhost"       # Hostname for the server
+      
+      # CORS Settings
+      CORS_ORIGIN="http://localhost:*" # Allowed CORS origin, adjust as necessary
+      
+      # Rate Limiting
+      COMMON_RATE_LIMIT_WINDOW_MS="1000" # Window size for rate limiting (ms)
+      COMMON_RATE_LIMIT_MAX_REQUESTS="20" # Max number of requests per window per IP
+      
+      DB_HOST=localhost
+      DB_PORT=3306
+      DB_USERNAME=root
+      DB_PASSWORD=
+      DB_DATABASE=cinema_db
+   ```
 
 3. **Configuración de la Base de Datos**
 
