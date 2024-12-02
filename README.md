@@ -11,7 +11,7 @@ API REST desarrollada con Express.js, utilizando TypeScript y TypeORM como ORM.
   charset: "utf8mb4"
   collation: "utf8mb4_general"
 
-  Ejemplo:
+  -Ejemplo:
  ![image](https://github.com/user-attachments/assets/f51bab7c-e576-46a3-b971-6ff206a746d8)
 
 
