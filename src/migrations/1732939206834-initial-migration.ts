@@ -5,7 +5,7 @@ export class InitialMigration1732939206834 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `CREATE TABLE \`film\` (\`film_id\` int NOT NULL AUTO_INCREMENT, \`title\` varchar(255) NOT NULL, \`overview\` text NOT NULL, \`poster_path\` varchar(255) NOT NULL, \`release_date\` varchar(255) NOT NULL, \`vote_average\` int NOT NULL, \`vote_count\` int NOT NULL, \`is_upcoming\` boolean NOT NULL DEFAULT false, PRIMARY KEY (\`film_id\`)) ENGINE=InnoDB`,
+      `CREATE TABLE \`film\` (\`film_id\` int NOT NULL AUTO_INCREMENT, \`title\` varchar(255) NOT NULL, \`overview\` text NOT NULL, \`poster_path\` varchar(255) NOT NULL, \`backdrop_path\` varchar(255) NOT NULL, \`release_date\` varchar(255) NOT NULL, \`vote_average\` int NOT NULL, \`vote_count\` int NOT NULL, \`is_upcoming\` boolean NOT NULL DEFAULT false, \`genres\` text NOT NULL, \`runtime\` int NOT NULL, PRIMARY KEY (\`film_id\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
       `CREATE TABLE \`film_function\` (\`function_id\` int NOT NULL AUTO_INCREMENT, \`film_id\` int NOT NULL, \`function_date\` date NOT NULL, \`start_time\` time NOT NULL, \`end_time\` time NOT NULL, \`ticket_price\` decimal(10,2) NOT NULL, PRIMARY KEY (\`function_id\`)) ENGINE=InnoDB`,

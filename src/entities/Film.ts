@@ -16,6 +16,9 @@ export class Film {
   poster_path: string;
 
   @Column({ type: "varchar" })
+  backdrop_path: string;
+
+  @Column({ type: "varchar" })
   release_date: string;
 
   @Column({ type: "float" })
@@ -26,6 +29,12 @@ export class Film {
 
   @Column({ type: "boolean", default: false })
   is_upcoming: boolean;
+
+  @Column("simple-array")
+  genres: string[];
+
+  @Column({ type: "int" })
+  runtime: number;
 
   @OneToMany(
     () => FilmFunction,

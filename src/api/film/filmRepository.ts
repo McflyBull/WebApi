@@ -19,7 +19,7 @@ export class FilmRepository {
   async findById(id: number): Promise<Film | null> {
     return await this.repository.findOne({
       where: { film_id: id },
-      relations: ["functions"],
+      relations: ["functions", "functions.seats"],
     });
   }
 

@@ -9,8 +9,8 @@ export const seedSeats = async () => {
   // Obtener todas las funciones
   const filmFunctions = await filmFunctionRepository.find();
 
-  const rows = ["A", "B", "C", "D", "E", "F", "G", "H"];
-  const columns = 12;
+  const rows = ["A", "B", "C", "D", "E"];
+  const columns = 8;
 
   // Crear asientos para cada función
   for (const filmFunction of filmFunctions) {
