@@ -20,39 +20,56 @@ export const seedTickets = async () => {
   const customers = await customerRepository.find();
   const seats = await seatRepository.find();
 
-  // Para cada función, crear entre 1 y 5 tickets aleatorios
+  // Contador total de tickets
+  let totalTickets = 0;
+
+  // Registro de películas por usuario
+  const userMovies: Record<number, Set<number>> = {
+    1: new Set(),
+    2: new Set(),
+    3: new Set(),
+  };
+
+  // Para cada función, crear tickets
   for (const filmFunction of functions) {
-    // Cargar la función con sus asientos relacionados
-    const functionWithSeats = await functionRepository.findOne({
+    if (totalTickets >= 20) break;
+
+    const functionWithDetails = await functionRepository.findOne({
       where: { function_id: filmFunction.function_id },
-      relations: ["seats"],
+      relations: ["seats", "film"],
     });
 
-    if (!functionWithSeats || !functionWithSeats.seats) continue;
+    if (!functionWithDetails || !functionWithDetails.seats || !functionWithDetails.film) continue;
 
-    const numTickets = Math.floor(Math.random() * 5) + 1;
-    const availableSeats = [...functionWithSeats.seats];
+    const availableSeats = [...functionWithDetails.seats];
 
-    // Limitar el número de tickets al número de asientos disponibles
-    const actualNumTickets = Math.min(numTickets, availableSeats.length);
-
-    for (let i = 0; i < actualNumTickets; i++) {
-      const randomCustomer = customers[Math.floor(Math.random() * customers.length)];
-
-      // Seleccionar un asiento aleatorio disponible
+    while (availableSeats.length > 0 && totalTickets < 20) {
       const randomSeatIndex = Math.floor(Math.random() * availableSeats.length);
       const randomSeat = availableSeats[randomSeatIndex];
       availableSeats.splice(randomSeatIndex, 1);
 
+      // Encontrar un usuario que no haya visto esta película
+      let selectedCustomerId = null;
+      for (let userId = 1; userId <= 3; userId++) {
+        if (!userMovies[userId].has(functionWithDetails.film.film_id)) {
+          selectedCustomerId = userId;
+          userMovies[userId].add(functionWithDetails.film.film_id);
+          break;
+        }
+      }
+
+      if (selectedCustomerId === null) continue;
+
       const ticketData = {
         function_id: filmFunction.function_id,
-        customer_id: randomCustomer.customer_id,
+        customer_id: selectedCustomerId,
         seat_id: randomSeat.seat_id,
         purchase_date: new Date(),
         total_price: filmFunction.ticket_price,
       };
 
       await ticketRepository.save(ticketRepository.create(ticketData));
+      totalTickets++;
     }
   }
 };

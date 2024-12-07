@@ -20,21 +20,21 @@ export const seedFilmFunctions = async () => {
         function_date: new Date("2024-01-20"),
         start_time: "14:00:00",
         end_time: "16:30:00",
-        ticket_price: 12.5,
+        ticket_price: 10000,
       },
       {
         film_id: film.film_id,
         function_date: new Date("2024-01-20"),
         start_time: "17:00:00",
         end_time: "19:30:00",
-        ticket_price: 15.0,
+        ticket_price: 8000,
       },
       {
         film_id: film.film_id,
         function_date: new Date("2024-01-20"),
         start_time: "20:00:00",
         end_time: "22:30:00",
-        ticket_price: 15.0,
+        ticket_price: 8000,
       },
     ];
 

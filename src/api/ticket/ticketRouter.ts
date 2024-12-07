@@ -75,10 +75,10 @@ ticketRegistry.registerPath({
 });
 router.get("/:id", validateRequest(GetTicketSchema), ticketController.getTicketById.bind(ticketController));
 
-// Get Tickets by Customer ID
+// Get Tickets by User ID
 ticketRegistry.registerPath({
   method: "get",
-  path: "/tickets/customer/{customerId}",
+  path: "/tickets/user/{customerId}",
   tags: ["Ticket"],
   summary: "Obtener tickets por cliente",
   description: "Obtiene todos los tickets de un cliente específico",
@@ -102,7 +102,7 @@ ticketRegistry.registerPath({
   },
 });
 router.get(
-  "/customer/:customerId",
+  "/user/:customerId",
   validateRequest(GetTicketsByCustomerSchema),
   ticketController.getTicketsByCustomerId.bind(ticketController),
 );

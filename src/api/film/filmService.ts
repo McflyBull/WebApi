@@ -34,7 +34,6 @@ export class FilmService {
       }
 
       film.functions = film.functions.map((func) => {
-        console.log("func.tickets", func.tickets);
         const occupiedSeatIds = func.tickets?.map((ticket) => ticket.seat_id) || [];
 
         // Marcamos cada asiento como ocupado o no
