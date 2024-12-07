@@ -1,10 +1,10 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Customer, FilmFunction, Seat, Ticket } from ".";
+import { FilmFunction } from ".";
 
 @Entity()
 export class Film {
   @PrimaryGeneratedColumn()
-  id: number;
+  film_id: number;
 
   @Column({ type: "varchar" })
   title: string;
@@ -23,6 +23,9 @@ export class Film {
 
   @Column({ type: "int" })
   vote_count: number;
+
+  @Column({ type: "boolean", default: false })
+  is_upcoming: boolean;
 
   @OneToMany(
     () => FilmFunction,
