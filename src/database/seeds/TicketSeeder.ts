@@ -22,17 +22,26 @@ export const seedTickets = async () => {
 
   // Para cada función, crear entre 1 y 5 tickets aleatorios
   for (const filmFunction of functions) {
-    const numTickets = Math.floor(Math.random() * 5) + 1; // 1-5 tickets por función
-    const availableSeats = [...seats]; // Copia de asientos para evitar duplicados
+    // Cargar la función con sus asientos relacionados
+    const functionWithSeats = await functionRepository.findOne({
+      where: { function_id: filmFunction.function_id },
+      relations: ["seats"],
+    });
 
-    for (let i = 0; i < numTickets; i++) {
-      // Seleccionar un cliente aleatorio
+    if (!functionWithSeats || !functionWithSeats.seats) continue;
+
+    const numTickets = Math.floor(Math.random() * 5) + 1;
+    const availableSeats = [...functionWithSeats.seats];
+
+    // Limitar el número de tickets al número de asientos disponibles
+    const actualNumTickets = Math.min(numTickets, availableSeats.length);
+
+    for (let i = 0; i < actualNumTickets; i++) {
       const randomCustomer = customers[Math.floor(Math.random() * customers.length)];
 
       // Seleccionar un asiento aleatorio disponible
       const randomSeatIndex = Math.floor(Math.random() * availableSeats.length);
       const randomSeat = availableSeats[randomSeatIndex];
-      // Remover el asiento usado para evitar duplicados en la misma función
       availableSeats.splice(randomSeatIndex, 1);
 
       const ticketData = {

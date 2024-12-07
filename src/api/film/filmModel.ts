@@ -34,3 +34,24 @@ export const UpdateFilmSchema = z.object({
     film_id: true,
   }),
 });
+
+const SeatSchema = z.object({
+  seat_id: z.number(),
+  row: z.number(),
+  column: z.number(),
+  isOccupied: z.boolean(),
+});
+
+const FunctionSchema = z.object({
+  function_id: z.number(),
+  film_id: z.number(),
+  function_date: z.date(),
+  start_time: z.string(),
+  end_time: z.string(),
+  ticket_price: z.number(),
+  seats: z.array(SeatSchema),
+});
+
+export const FilmWithFunctionsSchema = FilmSchema.extend({
+  functions: z.array(FunctionSchema),
+});

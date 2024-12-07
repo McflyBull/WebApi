@@ -6,6 +6,11 @@ export const seedSeats = async () => {
   const seatRepository = AppDataSource.getRepository(Seat);
   const filmFunctionRepository = AppDataSource.getRepository(FilmFunction);
 
+  // Limpiar usando SQL directo
+  await seatRepository.query("SET FOREIGN_KEY_CHECKS = 0");
+  await seatRepository.query("TRUNCATE TABLE seat");
+  await seatRepository.query("SET FOREIGN_KEY_CHECKS = 1");
+
   // Obtener todas las funciones
   const filmFunctions = await filmFunctionRepository.find();
 

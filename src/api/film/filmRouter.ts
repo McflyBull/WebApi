@@ -110,7 +110,7 @@ filmRegistry.registerPath({
   path: "/films/{id}",
   tags: ["Film"],
   summary: "Get film by ID",
-  description: "Retrieves a specific film by its ID",
+  description: "Retrieves a specific film by its ID, including functions and their seats with occupation status",
   request: {
     params: GetFilmSchema.shape.params,
   },

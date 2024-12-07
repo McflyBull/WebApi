@@ -32,7 +32,7 @@ export class FilmFunction {
     () => Ticket,
     (ticket: Ticket) => ticket.function,
   )
-  tickets: Ticket[];
+  tickets: Ticket[] | null;
 
   @OneToMany(
     () => Seat,
