@@ -58,9 +58,9 @@ export class UserService {
         return ServiceResponse.conflict("El email ya está registrado", null);
       }
       this.userRepository.registerAsync(first_name, last_name, email, password, "user");
-      return ServiceResponse.success("Usuario registrado con éxito", null);
+      return ServiceResponse.created("Usuario registrado con éxito", null);
     } catch (ex) {
-      return ServiceResponse.failure("An error occurred while register user.", null, StatusCodes.INTERNAL_SERVER_ERROR);
+      return ServiceResponse.failure("Error interno del servidor", null, StatusCodes.INTERNAL_SERVER_ERROR);
     }
   }
 }
