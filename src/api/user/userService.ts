@@ -45,6 +45,24 @@ export class UserService {
       return ServiceResponse.failure("An error occurred while finding user.", null, StatusCodes.INTERNAL_SERVER_ERROR);
     }
   }
+
+  async register(
+    first_name: string,
+    last_name: string,
+    email: string,
+    password: string,
+  ): Promise<ServiceResponse<null>> {
+    try {
+      const isEmailRegistered = await this.userRepository.isEmailRegistered(email);
+      if (isEmailRegistered) {
+        return ServiceResponse.conflict("El email ya está registrado", null);
+      }
+      this.userRepository.registerAsync(first_name, last_name, email, password, "user");
+      return ServiceResponse.success("Usuario registrado con éxito", null);
+    } catch (ex) {
+      return ServiceResponse.failure("An error occurred while register user.", null, StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
 }
 
 export const userService = new UserService();
