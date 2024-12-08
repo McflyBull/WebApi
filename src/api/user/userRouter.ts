@@ -30,3 +30,108 @@ userRegistry.registerPath({
 });
 
 userRouter.get("/:id", validateRequest(GetUserSchema), userController.getUser);
+
+// Esquema de validación
+const RegisterUserSchema = z.object({
+  body: z.object({
+    first_name: z.string(),
+    last_name: z.string(),
+    email: z.string().email(),
+    password: z.string().min(8),
+  }),
+});
+
+userRegistry.registerPath({
+  method: "post",
+  path: "/register",
+  tags: ["User"],
+  request: {},
+  responses: {},
+});
+
+userRegistry.registerPath({
+  method: "post",
+  path: "/register",
+  tags: ["User"],
+  request: {
+    body: {
+      content: {
+        "application/json": {
+          schema: z.object({
+            first_name: z.string(),
+            last_name: z.string(),
+            email: z.string().email(),
+            password: z.string().min(8),
+          }),
+          example: {
+            first_name: "John",
+            last_name: "Doe",
+            email: "johndoe@example.com",
+            password: "securepassword",
+          },
+        },
+      },
+    },
+  },
+  responses: {
+    201: {
+      description: "Usuario registrado con éxito",
+      content: {
+        "application/json": {
+          schema: z.object({
+            success: z.boolean(),
+            message: z.string(),
+            responseObject: z.optional(z.any()),
+            statusCode: z.number(),
+          }),
+          example: {
+            success: true,
+            message: "Usuario registrado con éxito",
+            responseObject: null,
+            statusCode: 201,
+          },
+        },
+      },
+    },
+    409: {
+      description: "El email ya está registrado",
+      content: {
+        "application/json": {
+          schema: z.object({
+            success: z.boolean(),
+            message: z.string(),
+            responseObject: z.optional(z.any()),
+            statusCode: z.number(),
+          }),
+          example: {
+            success: false,
+            message: "El email ya está registrado",
+            responseObject: null,
+            statusCode: 409,
+          },
+        },
+      },
+    },
+    500: {
+      description: "Error interno del servidor",
+      content: {
+        "application/json": {
+          schema: z.object({
+            success: z.boolean(),
+            message: z.string(),
+            responseObject: z.optional(z.any()),
+            statusCode: z.number(),
+          }),
+          example: {
+            success: false,
+            message: "Error interno del servidor",
+            responseObject: null,
+            statusCode: 500,
+          },
+        },
+      },
+    },
+  },
+});
+
+userRouter.post("/register", validateRequest(RegisterUserSchema), userController.registerUser);

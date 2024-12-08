@@ -1,3 +1,4 @@
+import { logger } from "@/server";
 import type { Request, RequestHandler, Response } from "express";
 
 import { userService } from "@/api/user/userService";
@@ -12,6 +13,15 @@ class UserController {
   public getUser: RequestHandler = async (req: Request, res: Response) => {
     const id = Number.parseInt(req.params.id as string, 10);
     const serviceResponse = await userService.findById(id);
+    return handleServiceResponse(serviceResponse, res);
+  };
+
+  public registerUser: RequestHandler = async (req: Request, res: Response) => {
+    const first_name = req.body.first_name;
+    const last_name = req.body.last_name;
+    const email = req.body.email;
+    const password = req.body.password;
+    const serviceResponse = await userService.register(first_name, last_name, email, password);
     return handleServiceResponse(serviceResponse, res);
   };
 }
