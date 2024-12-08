@@ -61,7 +61,11 @@ export class FilmService {
 
   async createFilm(filmDto: FilmDTO): Promise<ServiceResponse<Film | null>> {
     try {
-      const created = await this.repository.create(filmDto);
+      const filmWithUpcoming = {
+        ...filmDto,
+        is_upcoming: true,
+      };
+      const created = await this.repository.create(filmWithUpcoming);
       return ServiceResponse.success<Film>("Film created successfully", created);
     } catch (ex) {
       const errorMessage = `Error creating film: ${(ex as Error).message}`;

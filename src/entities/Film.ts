@@ -21,12 +21,6 @@ export class Film {
   @Column({ type: "varchar" })
   release_date: string;
 
-  @Column({ type: "float" })
-  vote_average: number;
-
-  @Column({ type: "int" })
-  vote_count: number;
-
   @Column({ type: "boolean", default: false })
   is_upcoming: boolean;
 

@@ -12,7 +12,6 @@ export const FilmSchema = z.object({
   overview: z.string(),
   poster_path: z.string(),
   release_date: z.string(),
-  vote_average: z.number().positive(),
 });
 
 export type FilmDTO = z.infer<typeof FilmSchema>;
