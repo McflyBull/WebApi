@@ -16,20 +16,27 @@ export class Film {
   poster_path: string;
 
   @Column({ type: "varchar" })
+  backdrop_path: string;
+
+  @Column({ type: "varchar" })
   release_date: string;
-
-  @Column({ type: "float" })
-  vote_average: number;
-
-  @Column({ type: "int" })
-  vote_count: number;
 
   @Column({ type: "boolean", default: false })
   is_upcoming: boolean;
 
+  @Column("simple-array")
+  genres: string[];
+
+  @Column({ type: "int" })
+  runtime: number;
+
   @OneToMany(
     () => FilmFunction,
     (filmFunction: FilmFunction) => filmFunction.film,
+    {
+      cascade: true,
+      onDelete: "CASCADE",
+    },
   )
   functions: FilmFunction[];
 }

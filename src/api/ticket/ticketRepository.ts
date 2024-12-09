@@ -29,7 +29,10 @@ export class TicketRepository {
   async findByCustomerId(customerId: number): Promise<Ticket[]> {
     return await this.repository.find({
       where: { customer_id: customerId },
-      relations: ["function", "customer", "seat"],
+      relations: ["function", "function.film", "customer", "seat"],
+      order: {
+        purchase_date: "DESC",
+      },
     });
   }
 }

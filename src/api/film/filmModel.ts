@@ -12,7 +12,6 @@ export const FilmSchema = z.object({
   overview: z.string(),
   poster_path: z.string(),
   release_date: z.string(),
-  vote_average: z.number().positive(),
 });
 
 export type FilmDTO = z.infer<typeof FilmSchema>;
@@ -33,4 +32,25 @@ export const UpdateFilmSchema = z.object({
   body: FilmSchema.partial().omit({
     film_id: true,
   }),
+});
+
+const SeatSchema = z.object({
+  seat_id: z.number(),
+  row: z.number(),
+  column: z.number(),
+  isOccupied: z.boolean(),
+});
+
+const FunctionSchema = z.object({
+  function_id: z.number(),
+  film_id: z.number(),
+  function_date: z.date(),
+  start_time: z.string(),
+  end_time: z.string(),
+  ticket_price: z.number(),
+  seats: z.array(SeatSchema),
+});
+
+export const FilmWithFunctionsSchema = FilmSchema.extend({
+  functions: z.array(FunctionSchema),
 });

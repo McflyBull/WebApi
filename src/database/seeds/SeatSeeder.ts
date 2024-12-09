@@ -6,11 +6,16 @@ export const seedSeats = async () => {
   const seatRepository = AppDataSource.getRepository(Seat);
   const filmFunctionRepository = AppDataSource.getRepository(FilmFunction);
 
+  // Limpiar usando SQL directo
+  await seatRepository.query("SET FOREIGN_KEY_CHECKS = 0");
+  await seatRepository.query("TRUNCATE TABLE seat");
+  await seatRepository.query("SET FOREIGN_KEY_CHECKS = 1");
+
   // Obtener todas las funciones
   const filmFunctions = await filmFunctionRepository.find();
 
-  const rows = ["A", "B", "C", "D", "E", "F", "G", "H"];
-  const columns = 12;
+  const rows = ["A", "B", "C", "D", "E"];
+  const columns = 8;
 
   // Crear asientos para cada función
   for (const filmFunction of filmFunctions) {

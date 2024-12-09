@@ -57,6 +57,31 @@ router.post("/", validateRequest(CreateFilmSchema), controller.create.bind(contr
 // Get All
 filmRegistry.registerPath({
   method: "get",
+  path: "/films",
+  tags: ["Film"],
+  summary: "Get all films",
+  description: "Retrieves a list of all films",
+  responses: {
+    ...createApiResponse(z.array(FilmSchema), "Films retrieved successfully"),
+    404: {
+      description: "No films found",
+      content: {
+        "application/json": {
+          schema: z.object({
+            success: z.boolean(),
+            message: z.string(),
+            responseObject: z.null(),
+          }),
+        },
+      },
+    },
+  },
+});
+router.get("/", controller.getAll.bind(controller));
+
+// Get All
+filmRegistry.registerPath({
+  method: "get",
   path: "/films/now_playing",
   tags: ["Film"],
   summary: "Get all now playing films",
@@ -110,7 +135,7 @@ filmRegistry.registerPath({
   path: "/films/{id}",
   tags: ["Film"],
   summary: "Get film by ID",
-  description: "Retrieves a specific film by its ID",
+  description: "Retrieves a specific film by its ID, including functions and their seats with occupation status",
   request: {
     params: GetFilmSchema.shape.params,
   },

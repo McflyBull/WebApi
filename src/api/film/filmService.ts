@@ -32,12 +32,27 @@ export class FilmService {
       if (!film) {
         return ServiceResponse.failure("Film not found", null, StatusCodes.NOT_FOUND);
       }
+
+      film.functions = film.functions.map((func) => {
+        const occupiedSeatIds = func.tickets?.map((ticket) => ticket.seat_id) || [];
+
+        // Marcamos cada asiento como ocupado o no
+        func.seats = func.seats.map((seat) => ({
+          ...seat,
+          isOccupied: occupiedSeatIds.includes(seat.seat_id),
+        }));
+
+        func.tickets = null;
+
+        return func;
+      });
+
       return ServiceResponse.success<Film>("Film retrieved successfully", film);
     } catch (ex) {
-      const errorMessage = `Error finding film function with id ${id}: ${(ex as Error).message}`;
+      const errorMessage = `Error finding film with id ${id}: ${(ex as Error).message}`;
       logger.error(errorMessage);
       return ServiceResponse.failure(
-        "An error occurred while retrieving the film function",
+        "An error occurred while retrieving the film",
         null,
         StatusCodes.INTERNAL_SERVER_ERROR,
       );
@@ -46,7 +61,11 @@ export class FilmService {
 
   async createFilm(filmDto: FilmDTO): Promise<ServiceResponse<Film | null>> {
     try {
-      const created = await this.repository.create(filmDto);
+      const filmWithUpcoming = {
+        ...filmDto,
+        is_upcoming: true,
+      };
+      const created = await this.repository.create(filmWithUpcoming);
       return ServiceResponse.success<Film>("Film created successfully", created);
     } catch (ex) {
       const errorMessage = `Error creating film: ${(ex as Error).message}`;
