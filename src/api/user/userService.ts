@@ -5,7 +5,14 @@ import type { User } from "@/api/user/userModel";
 import { UserRepository } from "@/api/user/userRepository";
 import { ServiceResponse } from "@/common/models/serviceResponse";
 import { logger } from "@/server";
-import jwt from "jsonwebtoken";
+import jwt, { type JwtPayload } from "jsonwebtoken";
+
+interface UserPayload extends JwtPayload {
+  customer_id: number;
+  first_name: string;
+  last_name: string;
+  role: string;
+}
 
 export class UserService {
   private userRepository: UserRepository;
@@ -101,6 +108,41 @@ export class UserService {
       };
 
       return ServiceResponse.success<Customer>("User found", userResponse);
+    } catch (ex) {
+      return ServiceResponse.failure("Error interno del servidor", null, StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async refreshToken(authHeader: string | undefined): Promise<ServiceResponse<any>> {
+    try {
+      if (!authHeader) {
+        return ServiceResponse.unauthorized("Token de autenticacion no proporcionado", null);
+      }
+      const [bearer, token] = authHeader.split(" ");
+      if (bearer !== "Bearer" || !token) {
+        return ServiceResponse.unauthorized("Formato de token no válido", null);
+      }
+      if (!process.env.JWT_REFRESH_TOKEN_SECRET) {
+        throw new Error("JWT_REFRESH_TOKEN_SECRET is not defined");
+      }
+      const user = jwt.verify(token, process.env.JWT_REFRESH_TOKEN_SECRET) as UserPayload;
+
+      const payload = {
+        id: user.customer_id,
+        first_name: user.first_name,
+        last_name: user.first_name,
+        is_admin: user.role,
+      };
+      if (!process.env.JWT_ACCESS_TOKEN_SECRET) {
+        throw new Error("JWT_ACCESS_TOKEN_SECRET is not defined");
+      }
+      const newAccessToken = jwt.sign(payload, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: "15m" });
+
+      const response = {
+        accessToken: newAccessToken,
+      };
+
+      return ServiceResponse.success("Accesstoken renovado", response);
     } catch (ex) {
       return ServiceResponse.failure("Error interno del servidor", null, StatusCodes.INTERNAL_SERVER_ERROR);
     }

@@ -30,6 +30,12 @@ class UserController {
     const serviceResponse = await userService.login(email, password);
     return handleServiceResponse(serviceResponse, res);
   };
+
+  public refreshToken: RequestHandler = async (req: Request, res: Response) => {
+    const authHeader = req.headers.authorization;
+    const serviceResponse = await userService.refreshToken(authHeader);
+    return handleServiceResponse(serviceResponse, res);
+  };
 }
 
 export const userController = new UserController();
