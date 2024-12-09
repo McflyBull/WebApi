@@ -1,9 +1,11 @@
 import { StatusCodes } from "http-status-codes";
 
+import type { Customer } from "@/api/user/customerModel";
 import type { User } from "@/api/user/userModel";
 import { UserRepository } from "@/api/user/userRepository";
 import { ServiceResponse } from "@/common/models/serviceResponse";
 import { logger } from "@/server";
+import jwt from "jsonwebtoken";
 
 export class UserService {
   private userRepository: UserRepository;
@@ -59,6 +61,46 @@ export class UserService {
       }
       this.userRepository.registerAsync(first_name, last_name, email, password, "user");
       return ServiceResponse.created("Usuario registrado con éxito", null);
+    } catch (ex) {
+      return ServiceResponse.failure("Error interno del servidor", null, StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async login(email: string, password: string): Promise<ServiceResponse<Customer | null>> {
+    try {
+      const user = await this.userRepository.findByEmailAndPassword(email, password);
+      if (!user) {
+        return ServiceResponse.failure("Usuario no encontrado", null, StatusCodes.NOT_FOUND);
+      }
+      const payload = {
+        id: user.customer_id,
+        first_name: user.first_name,
+        last_name: user.first_name,
+        is_admin: user.role === "admin",
+      };
+
+      if (!process.env.JWT_ACCESS_TOKEN_SECRET) {
+        throw new Error("JWT_ACCESS_TOKEN_SECRET is not defined");
+      }
+      //Access token.
+      const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: "15m" });
+
+      if (!process.env.JWT_REFRESH_TOKEN_SECRET) {
+        throw new Error("JWT_REFRESH_TOKEN_SECRET is not defined");
+      }
+      //Refresh token.
+      const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_TOKEN_SECRET, { expiresIn: "7d" });
+
+      const userResponse = {
+        success: true,
+        message: "Inicio de sesion exitoso",
+        first_name: user.first_name,
+        last_name: user.last_name,
+        accessToken,
+        refreshToken,
+      };
+
+      return ServiceResponse.success<Customer>("User found", userResponse);
     } catch (ex) {
       return ServiceResponse.failure("Error interno del servidor", null, StatusCodes.INTERNAL_SERVER_ERROR);
     }
