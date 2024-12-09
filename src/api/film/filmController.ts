@@ -23,6 +23,11 @@ export class FilmController {
     handleServiceResponse(serviceResponse, res);
   }
 
+  async getAll(_req: Request, res: Response): Promise<void> {
+    const serviceResponse = await this.service.getAllFilms();
+    handleServiceResponse(serviceResponse, res);
+  }
+
   async getById(req: Request, res: Response): Promise<void> {
     const id = Number(req.params.id);
     if (Number.isNaN(id)) {

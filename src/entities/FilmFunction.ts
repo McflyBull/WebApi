@@ -31,12 +31,20 @@ export class FilmFunction {
   @OneToMany(
     () => Ticket,
     (ticket: Ticket) => ticket.function,
+    {
+      cascade: true,
+      onDelete: "CASCADE",
+    },
   )
   tickets: Ticket[] | null;
 
   @OneToMany(
     () => Seat,
     (seat: Seat) => seat.function,
+    {
+      cascade: true,
+      onDelete: "CASCADE",
+    },
   )
   seats: Seat[];
 }

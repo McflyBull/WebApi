@@ -33,6 +33,10 @@ export class Film {
   @OneToMany(
     () => FilmFunction,
     (filmFunction: FilmFunction) => filmFunction.film,
+    {
+      cascade: true,
+      onDelete: "CASCADE",
+    },
   )
   functions: FilmFunction[];
 }
