@@ -3,6 +3,7 @@ import express, { type Router } from "express";
 import { z } from "zod";
 
 import { createApiResponse } from "@/api-docs/openAPIResponseBuilders";
+import { requireAuth } from "@/common/middleware/requireAuth";
 import { validateRequest } from "@/common/utils/httpHandlers";
 import { FilmController } from "./filmController";
 import { CreateFilmSchema, FilmSchema, GetFilmSchema, UpdateFilmSchema } from "./filmModel";
@@ -52,7 +53,7 @@ filmRegistry.registerPath({
     },
   },
 });
-router.post("/", validateRequest(CreateFilmSchema), controller.create.bind(controller));
+router.post("/", requireAuth, validateRequest(CreateFilmSchema), controller.create.bind(controller));
 
 // Get All
 filmRegistry.registerPath({
@@ -214,7 +215,7 @@ filmRegistry.registerPath({
     },
   },
 });
-router.put("/:id", validateRequest(UpdateFilmSchema), controller.update.bind(controller));
+router.put("/:id", requireAuth, validateRequest(UpdateFilmSchema), controller.update.bind(controller));
 
 // Delete
 filmRegistry.registerPath({
@@ -254,6 +255,6 @@ filmRegistry.registerPath({
     },
   },
 });
-router.delete("/:id", validateRequest(GetFilmSchema), controller.delete.bind(controller));
+router.delete("/:id", requireAuth, validateRequest(GetFilmSchema), controller.delete.bind(controller));
 
 export default router;

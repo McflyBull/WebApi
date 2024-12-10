@@ -37,7 +37,7 @@ app.use(apiRouter);
 
 apiRouter.use("/health-check", healthCheckRouter);
 apiRouter.use("/users", userRouter);
-apiRouter.use("/films", requireAuth, filmRouter);
+apiRouter.use("/films", filmRouter);
 apiRouter.use("/film-functions", requireAuth, filmFunctionRouter);
 apiRouter.use("/tickets", requireAuth, ticketRouter);
 
