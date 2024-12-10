@@ -141,6 +141,7 @@ export class UserService {
 
       const response = {
         accessToken: newAccessToken,
+        user_id: user.id,
       };
 
       return ServiceResponse.success("Accesstoken renovado", response);
