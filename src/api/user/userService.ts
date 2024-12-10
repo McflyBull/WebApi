@@ -105,6 +105,7 @@ export class UserService {
         last_name: user.last_name,
         accessToken,
         refreshToken,
+        is_admin: user.role === "admin",
       };
 
       return ServiceResponse.success<Customer>("User found", userResponse);

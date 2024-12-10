@@ -276,6 +276,7 @@ userRegistry.registerPath({
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImZpcnN0X25hbWUiOiJSYXVsIiwibGFzdF9uYW1lIjoiUmF1bCIsImlzX2FkbWluIjpmYWxzZSwiaWF0IjoxNzMzNzgxOTIyLCJleHAiOjE3MzM3ODI4MjJ9.lk3yOAHpnRaD-fS_jn1upiGsjQ8m76rQX2NWgp_Nc78",
               refreshToken:
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImZpcnN0X25hbWUiOiJSYXVsIiwibGFzdF9uYW1lIjoiUmF1bCIsImlzX2FkbWluIjpmYWxzZSwiaWF0IjoxNzMzNzgxOTIyLCJleHAiOjE3MzQzODY3MjJ9.aKMFynHDygAVmJ166Mq04vHhKlvNVtyzJnP5tiwwNlM",
+              is_admin: true,
             },
             statusCode: 200,
           },
