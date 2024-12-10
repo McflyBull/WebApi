@@ -141,7 +141,7 @@ userRegistry.registerPath({
 
 userRegistry.registerPath({
   method: "post",
-  path: "/register",
+  path: "/users/register",
   tags: ["User"],
   request: {
     body: {
@@ -235,7 +235,7 @@ const LoginUserSchema = z.object({
 
 userRegistry.registerPath({
   method: "post",
-  path: "/login",
+  path: "/users/login",
   tags: ["User"],
   request: {
     body: {
