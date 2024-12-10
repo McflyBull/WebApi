@@ -22,10 +22,17 @@ export const GetFilmFunctionSchema = z.object({
   params: z.object({ id: commonValidations.id }),
 });
 
+// Nuevo esquema para la creación de funciones
+export const CreateFilmFunctionRequestSchema = z.object({
+  film_id: z.number(),
+  schedules: z.array(z.string()),
+  start_date: z.string(),
+  end_date: z.string(),
+});
+
+// Actualizar el schema de creación
 export const CreateFilmFunctionSchema = z.object({
-  body: FilmFunctionSchema.omit({
-    function_id: true,
-  }),
+  body: CreateFilmFunctionRequestSchema,
 });
 
 export const UpdateFilmFunctionSchema = z.object({
