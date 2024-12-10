@@ -5,6 +5,7 @@ import { pino } from "pino";
 
 import { openAPIRouter } from "@/api-docs/openAPIRouter";
 import filmRouter from "@/api/film/filmRouter";
+import filmFunctionRouter from "@/api/filmFunction/filmFunctionRouter";
 import { healthCheckRouter } from "@/api/healthCheck/healthCheckRouter";
 import ticketRouter from "@/api/ticket/ticketRouter";
 import { userRouter } from "@/api/user/userRouter";
@@ -37,6 +38,7 @@ app.use(apiRouter);
 apiRouter.use("/health-check", healthCheckRouter);
 apiRouter.use("/users", userRouter);
 apiRouter.use("/films", requireAuth, filmRouter);
+apiRouter.use("/film-functions", requireAuth, filmFunctionRouter);
 apiRouter.use("/tickets", requireAuth, ticketRouter);
 
 // Swagger UI
