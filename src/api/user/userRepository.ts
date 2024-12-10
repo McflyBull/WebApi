@@ -68,4 +68,20 @@ export class UserRepository {
     });
     return await this.customerRepository.save(newUser);
   }
+
+  async findByEmailAndPassword(email: string, password: string): Promise<Customer | null> {
+    const customer = await this.customerRepository.findOne({
+      where: {
+        email: email,
+      },
+    });
+
+    if (customer) {
+      const isPasswordValid = await bcrypt.compare(password, customer.password);
+      if (isPasswordValid) {
+        return customer;
+      }
+    }
+    return null;
+  }
 }
