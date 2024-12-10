@@ -11,6 +11,7 @@ import { userRouter } from "@/api/user/userRouter";
 import errorHandler from "@/common/middleware/errorHandler";
 import rateLimiter from "@/common/middleware/rateLimiter";
 import requestLogger from "@/common/middleware/requestLogger";
+import { requireAuth } from "@/common/middleware/requireAuth";
 import { env } from "@/common/utils/envConfig";
 
 const logger = pino({ name: "server start" });
@@ -35,8 +36,8 @@ app.use(apiRouter);
 
 apiRouter.use("/health-check", healthCheckRouter);
 apiRouter.use("/users", userRouter);
-apiRouter.use("/films", filmRouter);
-apiRouter.use("/tickets", ticketRouter);
+apiRouter.use("/films", requireAuth, filmRouter);
+apiRouter.use("/tickets", requireAuth, ticketRouter);
 
 // Swagger UI
 app.use(openAPIRouter);

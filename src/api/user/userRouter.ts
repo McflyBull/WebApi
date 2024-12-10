@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import { createApiResponse } from "@/api-docs/openAPIResponseBuilders";
 import { GetUserSchema, UserSchema } from "@/api/user/userModel";
+import { requireAuth } from "@/common/middleware/requireAuth";
 import { validateRequest } from "@/common/utils/httpHandlers";
 import { userController } from "./userController";
 
@@ -23,15 +24,7 @@ userRegistry.registerPath({
   responses: createApiResponse(TokenResponseSchema, "Success"),
 });
 
-userRouter.get("/", userController.getUsers);
-
-const securitySchemes = {
-  BearerAuth: {
-    type: "http",
-    scheme: "bearer",
-    bearerFormat: "JWT",
-  },
-};
+userRouter.get("/", requireAuth, userController.getUsers);
 
 userRegistry.registerPath({
   method: "get",
@@ -126,7 +119,7 @@ userRegistry.registerPath({
   responses: createApiResponse(UserSchema, "Success"),
 });
 
-userRouter.get("/:id", validateRequest(GetUserSchema), userController.getUser);
+userRouter.get("/:id", requireAuth, validateRequest(GetUserSchema), userController.getUser);
 
 // Esquema de validación
 const RegisterUserSchema = z.object({
@@ -331,5 +324,3 @@ userRegistry.registerPath({
 });
 
 userRouter.post("/login", validateRequest(LoginUserSchema), userController.loginUser);
-
-//router.get('/refresh-token', usuarioController.refreshToken);
